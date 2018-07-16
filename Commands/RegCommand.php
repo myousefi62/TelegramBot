@@ -22,12 +22,12 @@ use Longman\TelegramBot\Request;
  *
  * Command that demonstrated the Conversation funtionality in form of a simple survey.
  */
-class SurveyCommand extends UserCommand
+class RegCommand extends UserCommand
 {
     /**
      * @var string
      */
-    protected $name = 'survey';
+    protected $name = 'reg';
 
     /**
      * @var string
@@ -37,7 +37,7 @@ class SurveyCommand extends UserCommand
     /**
      * @var string
      */
-    protected $usage = '/survey';
+    protected $usage = '/reg';
 
     /**
      * @var string
@@ -177,7 +177,7 @@ class SurveyCommand extends UserCommand
                 $notes['gender'] = $text;
 
             // no break
-            case 4:
+          /*  case 4:
                 if ($message->getLocation() === null) {
                     $notes['state'] = 5;
                     $this->conversation->update();
@@ -209,15 +209,15 @@ class SurveyCommand extends UserCommand
                     $result = Request::sendMessage($data);
                     break;
                 }
-
-                /** @var PhotoSize $photo */
+*/
+                /** @var PhotoSize $photo 
                 $photo             = $message->getPhoto()[0];
                 $notes['photo_id'] = $photo->getFileId();
-
+*/
             // no break
-            case 6:
+            case 4:
                 if ($message->getContact() === null) {
-                    $notes['state'] = 6;
+                    $notes['state'] = 4;
                     $this->conversation->update();
 
                     $data['reply_markup'] = (new Keyboard(
@@ -236,7 +236,7 @@ class SurveyCommand extends UserCommand
                 $notes['phone_number'] = $message->getContact()->getPhoneNumber();
 
             // no break
-            case 7:
+            case 5:
                 $this->conversation->update();
                 $out_text = '/Survey result:' . PHP_EOL;
                 unset($notes['state']);
@@ -244,7 +244,7 @@ class SurveyCommand extends UserCommand
                     $out_text .= PHP_EOL . ucfirst($k) . ': ' . $v;
                 }
 
-                $data['photo']        = $notes['photo_id'];
+               // $data['photo']        = $notes['photo_id'];
                 $data['reply_markup'] = Keyboard::remove(['selective' => true]);
                 $data['caption']      = $out_text;
                 $this->conversation->stop();

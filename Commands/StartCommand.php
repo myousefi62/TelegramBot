@@ -62,7 +62,7 @@ class StartCommand extends SystemCommand
             'chat_id' => $chat_id,
             'text'    => $text,
         ];
-
+        $this->telegram->executeCommand('keyboard');
         return Request::sendMessage($data);
     }
 }

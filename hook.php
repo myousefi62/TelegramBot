@@ -12,26 +12,27 @@
 require_once __DIR__ . '/vendor/autoload.php';
 
 // Add you bot's API key and name
-$bot_api_key  = 'your:bot_api_key';
-$bot_username = 'username_bot';
+$bot_api_key  = 'bot_api_key';
+$bot_username = 'bot_username';
 
 // Define all IDs of admin users in this array (leave as empty array if not used)
 $admin_users = [
-//    123,
+    54646654,
+    46464646
 ];
 
 // Define all paths for your custom commands in this array (leave as empty array if not used)
 $commands_paths = [
-//    __DIR__ . '/Commands/',
+    __DIR__ . '/Commands/',
 ];
 
 // Enter your MySQL database credentials
-//$mysql_credentials = [
-//    'host'     => 'localhost',
-//    'user'     => 'dbuser',
-//    'password' => 'dbpass',
-//    'database' => 'dbname',
-//];
+$mysql_credentials = [
+   'host'     => 'localhost',
+   'user'     => 'user',
+   'password' => '123456',
+   'database' => 'botdb',
+];
 
 try {
     // Create Telegram API object
@@ -44,13 +45,15 @@ try {
     $telegram->enableAdmins($admin_users);
 
     // Enable MySQL
-    //$telegram->enableMySql($mysql_credentials);
+    $telegram->enableMySql($mysql_credentials);
+   // $telegram->setCustomInput('/help');
 
     // Logging (Error, Debug and Raw Updates)
     //Longman\TelegramBot\TelegramLog::initErrorLog(__DIR__ . "/{$bot_username}_error.log");
     //Longman\TelegramBot\TelegramLog::initDebugLog(__DIR__ . "/{$bot_username}_debug.log");
     //Longman\TelegramBot\TelegramLog::initUpdateLog(__DIR__ . "/{$bot_username}_update.log");
-
+    
+    //ECHO __DIR__ . "/{$bot_username}_error.log";
     // If you are using a custom Monolog instance for logging, use this instead of the above
     //Longman\TelegramBot\TelegramLog::initialize($your_external_monolog_instance);
 
@@ -71,13 +74,18 @@ try {
     // Handle telegram webhook request
     $telegram->handle();
 
+
+        //$input = file_get_contents('php://input');
+        // echo $input->update_id;
+        //print_r(json_decode($input));
+
 } catch (Longman\TelegramBot\Exception\TelegramException $e) {
     // Silence is golden!
-    //echo $e;
+    echo $e;
     // Log telegram errors
     Longman\TelegramBot\TelegramLog::error($e);
 } catch (Longman\TelegramBot\Exception\TelegramLogException $e) {
     // Silence is golden!
     // Uncomment this to catch log initialisation errors
-    //echo $e;
+    echo $e;
 }

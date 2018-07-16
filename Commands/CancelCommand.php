@@ -69,8 +69,8 @@ class CancelCommand extends UserCommand
             $conversation->cancel();
             $text = 'Conversation "' . $conversation_command . '" cancelled!';
         }
-
-        return $this->removeKeyboard($text);
+        $this->removeKeyboard($text);
+        return $this->telegram->executeCommand('keyboard');
     }
 
     /**
